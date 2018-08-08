@@ -1,4 +1,4 @@
-package core;
+package century_core;
 
 public class SpiceCard extends AbstractMerchantCard {
 	private InventoryChange change;

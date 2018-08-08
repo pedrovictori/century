@@ -1,4 +1,4 @@
-package core;
+package century_core;
 
 public class TradeCard extends AbstractMerchantCard{
 	private final Inventory input;

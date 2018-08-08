@@ -1,4 +1,4 @@
-package core;
+package century_core;
 
 public interface Inventoriable {
 	public int getB();

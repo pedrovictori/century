@@ -1,4 +1,4 @@
-package core;
+package century_core;
 
 public class UpgradeCard extends AbstractMerchantCard {
 	private int upgrades;

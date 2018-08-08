@@ -1,4 +1,4 @@
-package core;
+package century_core;
 
 public abstract class AbstractMerchantCard implements MerchantCard {
 	private Inventory inventory = new Inventory();

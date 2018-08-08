@@ -1,4 +1,4 @@
-package core;
+package century_core;
 
 import android.util.Log;
 
