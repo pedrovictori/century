@@ -1,7 +1,5 @@
 package century_core;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +23,7 @@ public enum Action {
 				index--; //from human index to programming index
 
 			} catch (NumberFormatException nfe) { //bad notation
-				Log.e("Expected catch", nfe.getMessage());
+				System.out.println(nfe.getMessage());
 				setErrorMessage(badNotation);
 				return false;
 			}
@@ -122,7 +120,6 @@ public enum Action {
 						setErrorMessage(badNotation);
 						e.printStackTrace();
 						return false;
-
 					}
 				}
 			} else if (played instanceof UpgradeCard) {
@@ -151,6 +148,7 @@ public enum Action {
 			//todo move to core.Player
 			player.getPlayedCards().add(player.getHand().get(index)); //add card to played cards
 			player.getHand().remove(index); //remove card from hand
+			gameState.nextTurn();
 			return true;
 		}
 	},
@@ -169,7 +167,7 @@ public enum Action {
 				index--; //from human index to programming index
 
 			} catch (NumberFormatException nfe) { //bad notation
-				Log.e("Expected catch", nfe.getMessage());
+				System.out.println(nfe.getMessage());
 				setErrorMessage(badNotation);
 				return false;
 			}
@@ -179,6 +177,7 @@ public enum Action {
 				gameState.givePointCardToPlayer(player, cardClaimed);
 				gameState.getPointRow().remove(cardClaimed); //remove card from row
 				gameState.getPointRow().add(PointCard.factory(info[2])); //add new card to row
+				gameState.nextTurn();
 				return true;
 			}
 
