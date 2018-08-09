@@ -2,6 +2,7 @@ package century_core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Sorts incoming data and communicate with the relevant module
@@ -16,6 +17,7 @@ public class Hub {
 	private static final String claim = "claim";
 
 	//ANSWERS
+	private static final String startText = "Welcome. To start a new game, input \"start\"";
 	private static final String inputNumberPlayers = "Please input how many human and AI players are going to be playing, in the format \"3,1\"";
 	private static final String errorPlayerCount = "The maximum total number of players is five";
 	private static final String inputStarterPointCards = "Please input the five point cards from left to right, one per line, in the format \"p21p4110\"";
@@ -31,6 +33,8 @@ public class Hub {
 			"\"claim\", followed by the index of the point card claimed and the new card that enters the row in the format \"p21p4110\".\n";
 	private static final String errorCommand = "Command not recognised. Try again.";
 	private static final String tryAgain = "Please try again";
+	private static final String gameEnded = "Game ended. The winner is: ";
+	private static final String scores = "Congratulations! The scores are ";
 
 	//STARTER STUFF
 	List<PointCard> startPointCards = new ArrayList<>();
@@ -76,7 +80,20 @@ public class Hub {
 				else return errorCommand;
 
 				boolean wasSuccessful = action.doAction(gameState, parsed);
-				if (wasSuccessful) return moveDone + gameState.getCurrentTurn();
+				if (wasSuccessful){
+					if (gameState.hasGameEnded()) {
+						String answer = gameEnded + gameState.getWinner() + "\n" + scores + "\n";
+						Map<Player, Integer> scores = gameState.getScores();
+						for (Player player : gameState.getPlayers()) {
+							answer += "Player " + player.getTurnOrder() + ": " + Integer.valueOf(scores.get(player)) + " points\n";
+						}
+						answer += "\n\n" + startText;
+						currentState = State.WAITING_TO_START;
+						return answer;
+					}else{
+						return moveDone + gameState.getCurrentTurn();
+					}
+				}
 				else return action.getErrorMessage() + "/n" + tryAgain;
 			}
 
